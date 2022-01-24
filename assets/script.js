@@ -51,16 +51,40 @@ const createCanvas = () => {
   }
 };
 
+const drawLine = (x1, y1, x2, y2) => {
+  // Vertical line
+  if(x1 === x2) {
+    const startY = Math.min(y1, y2) - 1;
+    const endY = Math.max(y1, y2);
+    for(let i = startY; i < endY; i++) {
+      canvasMatrix[i][x1 - 1] = lineChar;
+    }
+  // Horizontal line
+  } else {
+    const startX = Math.min(x1, x2) - 1;
+    const endX = Math.max(x1, x2);
+    for(let i = startX; i < endX; i++) {
+      canvasMatrix[y1 - 1][i] = lineChar;
+    }
+  }
+};
+
 const executeCommand = (text) => {
   // TODO: add handling of other commands
-
-  const commandData = text.match(createCanvasRegex);
+  let commandData = null;
+  
+  commandData = text.match(createCanvasRegex);
   if(commandData)
   {
     canvasWidth = parseInt(commandData[1]);
     canvasHeight = parseInt(commandData[2]);
 
     createCanvas();
+  }
+
+  commandData = text.match(drawLineRegex);
+  if(commandData) {
+    drawLine(commandData[1], commandData[2], commandData[3], commandData[4]);
   }
 
   drawCanvas();
@@ -79,6 +103,7 @@ const isCommandLegit = (text) => {
   // If canvas exists, accept any command
   // TODO: check if coordinates actually fits in canvas
   if(text.match(drawLineRegex)) {
+    // TODO: check line is horizontal / vertical
     return true;
   } else if (text.match(drawRectangleRegex)) {
     return true;
@@ -112,3 +137,9 @@ input.addEventListener("keyup", (e) => {
     // TODO: clear command input once command is executed
   }
 })
+
+// Tests
+canvasWidth = 10;
+canvasHeight = 10;
+createCanvas()
+drawCanvas();

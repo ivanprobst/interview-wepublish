@@ -3,7 +3,11 @@ const topBorderChar = "-";
 const sideBorderChar = "|";
 const lineChar = "x";
 
-const createCanvasRegex = /C ([0-9]+) ([0-9]+)$/;
+const createCanvasRegex = /C (\d+) (\d+)$/;
+const drawLineRegex = /L (\d+) (\d+) (\d+) (\d+)$/;
+const drawRectangleRegex = /R (\d+) (\d+) (\d+) (\d+)$/;
+const fillRegex = /B (\d+) (\d+) (.)$/;
+const quitRegex = /Q$/;
 
 // Handlers
 let canvasWidth = 0;
@@ -63,14 +67,28 @@ const executeCommand = (text) => {
 };
 
 const isCommandLegit = (text) => {
-  // TODO: refine checks if command is valid:
-  // legit command name?
-  // legit values?
-  // canvas exists?
+  // If canvas doesn't exist, accept only C command
+  if(canvasMatrix.length === 0) {
+    if(text.match(createCanvasRegex)) {
+      return true;
+    }
 
-  if(text.match(createCanvasRegex)) {
+    return false;
+  }
+  
+  // If canvas exists, accept any command
+  // TODO: check if coordinates actually fits in canvas
+  if(text.match(drawLineRegex)) {
+    return true;
+  } else if (text.match(drawRectangleRegex)) {
+    return true;
+  } else if (text.match(fillRegex)) {
+    return true;
+  } else if (text.match(quitRegex)) {
     return true;
   }
+
+  return false;
 };
 
 // Init

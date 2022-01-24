@@ -369,3 +369,7 @@ footer {
   margin-top: 2rem;
   border-top: 1px solid gray;
 }
+
+#input-section {
+  margin-bottom: 1rem;
+}

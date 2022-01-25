@@ -16,6 +16,13 @@ let canvasMatrix = [];
 
 // TODO: see if drawing can be "optimized"
 const drawCanvas = () => {
+  const canvas = document.getElementById("canvas-area");
+
+  if(canvasMatrix.length === 0) {
+    canvas.innerHTML = "No canvas defined";
+    return;
+  }
+
   let drawnCanvas = "";
 
   // Upper canvas border
@@ -38,7 +45,6 @@ const drawCanvas = () => {
     drawnCanvas = drawnCanvas + topBorderChar;
   }
 
-  const canvas = document.getElementById("canvas-area");
   canvas.innerHTML = drawnCanvas;
 };
 
@@ -106,8 +112,13 @@ const fillAndExpand = (x, y, fillChar) => {
   }
 };
 
+const resetCanvas = () => {
+  canvasWidth = 0;
+  canvasHeight = 0;
+  canvasMatrix = [];
+};
+
 const executeCommand = (text) => {
-  // TODO: add handling of other commands
   let commandData = null;
   
   commandData = text.match(createCanvasRegex);
@@ -132,6 +143,11 @@ const executeCommand = (text) => {
   commandData = text.match(fillRegex);
   if(commandData) {
     fillAndExpand(parseInt(commandData[1]), parseInt(commandData[2]), commandData[3]);
+  }
+
+  commandData = text.match(quitRegex);
+  if(commandData) {
+    resetCanvas();
   }
 
   drawCanvas();
@@ -184,10 +200,3 @@ input.addEventListener("keyup", (e) => {
     // TODO: clear command input once command is executed
   }
 })
-
-// Tests
-canvasWidth = 10;
-canvasHeight = 10;
-createCanvas()
-drawRectangle(2, 2, 7, 7);
-drawCanvas();

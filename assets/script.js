@@ -9,11 +9,12 @@ const drawRectangleRegex = /^R (\d+) (\d+) (\d+) (\d+)$/;
 const fillRegex = /^B (\d+) (\d+) (.)$/;
 const quitRegex = /^Q$/;
 
-// Handlers
+// Vars
 let canvasWidth = 0;
 let canvasHeight = 0;
 let canvasMatrix = [];
 
+// Handlers
 const coordinatesAreInCanvas = (xs, ys) => {
   for(const x of xs) {
     if(x < 1 || x > canvasWidth)
@@ -202,9 +203,7 @@ const isCommandValid = (text) => {
   return false;
 };
 
-// Init
-const input = document.getElementById("input-field");
-input.addEventListener("keyup", (e) => {
+const onKeyupHandler = (e) => {
   const inputValue = e.target.value;
 
   const inputSection = document.getElementById("input-section");
@@ -224,4 +223,8 @@ input.addEventListener("keyup", (e) => {
     const inputField = document.getElementById("input-field");
     inputField.value = "";
   }
-})
+};
+
+// Init
+const input = document.getElementById("input-field");
+input.addEventListener("keyup", onKeyupHandler);

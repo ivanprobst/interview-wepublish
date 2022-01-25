@@ -83,6 +83,29 @@ const drawRectangle = (x1, y1, x2, y2) => {
   drawVerticalLine(bottomY, topY, leftX);
 };
 
+const fillAndExpand = (x, y, fillChar) => {
+  if(canvasMatrix[y - 1][x - 1] === lineChar || canvasMatrix[y - 1][x - 1] === fillChar)
+    return;
+
+  canvasMatrix[y - 1][x - 1] = fillChar;
+
+  if(y > 1) {
+    fillAndExpand(x, y - 1, fillChar);
+  }
+
+  if(x < canvasWidth) {
+    fillAndExpand(x + 1, y, fillChar);
+  }
+
+  if(y < canvasHeight) {
+    fillAndExpand(x, y + 1, fillChar);
+  }
+
+  if(x > 1) {
+    fillAndExpand(x - 1, y, fillChar);
+  }
+};
+
 const executeCommand = (text) => {
   // TODO: add handling of other commands
   let commandData = null;
@@ -98,12 +121,17 @@ const executeCommand = (text) => {
 
   commandData = text.match(drawLineRegex);
   if(commandData) {
-    drawLine(commandData[1], commandData[2], commandData[3], commandData[4]);
+    drawLine(parseInt(commandData[1]), parseInt(commandData[2]), parseInt(commandData[3]), parseInt(commandData[4]));
   }
 
   commandData = text.match(drawRectangleRegex);
   if(commandData) {
-    drawRectangle(commandData[1], commandData[2], commandData[3], commandData[4]);
+    drawRectangle(parseInt(commandData[1]), parseInt(commandData[2]), parseInt(commandData[3]), parseInt(commandData[4]));
+  }
+
+  commandData = text.match(fillRegex);
+  if(commandData) {
+    fillAndExpand(parseInt(commandData[1]), parseInt(commandData[2]), commandData[3]);
   }
 
   drawCanvas();
@@ -161,4 +189,5 @@ input.addEventListener("keyup", (e) => {
 canvasWidth = 10;
 canvasHeight = 10;
 createCanvas()
+drawRectangle(2, 2, 7, 7);
 drawCanvas();

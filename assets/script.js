@@ -184,13 +184,14 @@ const input = document.getElementById("input-field");
 input.addEventListener("keyup", (e) => {
   const inputValue = e.target.value;
 
+  const inputSection = document.getElementById("input-section");
   if(isCommandValid(inputValue)) {
-    input.style.borderColor = "green";
-    input.style.backgroundColor = "green";
+    inputSection.classList.remove("invalid");
+    inputSection.classList.add("valid");
   }
   else {
-    input.style.borderColor = "red";
-    input.style.backgroundColor = "red";
+    inputSection.classList.remove("valid");
+    inputSection.classList.add("invalid");
     return;
   }
 

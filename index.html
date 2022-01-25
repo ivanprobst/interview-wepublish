@@ -14,14 +14,21 @@
 
     <main>
       <section id="input-section">
-        <div>
-          <span>enter command: </span>
-          <input type="text" id="input-field" value="C 20 15" autofocus>
-        </div>
+        <span>enter command: </span>
+        <input type="text" id="input-field" placeholder="C 20 15" autofocus>
       </section>
 
       <section id="canvas-section">
         <code id="canvas-area">No canvas defined</code>
+      </section>
+
+      <section id ="instructions-section">
+        <h3>Instructions</h3>
+        <p><span>C w h</span><span>Create a new canvas of width w and height h.</span></p>
+        <p><span>L x1 y1 x2 y2</span><span>Create a new line from (x1,y1) to (x2,y2).</span></p>
+        <p><span>R x1 y1 x2 y2</span><span>Create a new rectangle, whose upper left corner is (x1,y1) and lower right corner is (x2,y2).</span></p>
+        <p><span>B x y c</span><span>Fill the entire area connected to (x,y) with "colour" c.</span></p>
+        <p><span>Q</span><span>Quit the program.</span></p>
       </section>
     </main>
 

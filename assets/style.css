@@ -355,21 +355,60 @@ template {
 
 body {
   margin: 2rem;
-  font-family: helvetica;
-  color: #374151;
-  background: #f3f4f6;
+  font-family: courier;
+  color: darkSlateGray;
+  background: ivory;
 }
 
 header {
   margin-bottom: 2rem;
   border-bottom: 1px solid gray;
 }
-
-footer {
-  margin-top: 2rem;
-  border-top: 1px solid gray;
+h2 {
+  font-size: 1rem;
+  font-weight: normal;
 }
 
 #input-section {
   margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: darkSeaGreen;
+}
+  #input-section.valid {
+    background: darkSeaGreen;
+  }
+  #input-section.invalid {
+    background: lightCoral;
+  }
+#input-field {
+  border: none;
+  background: transparent;
+  color: darkSlateGray;
+}
+  #input-field:focus {
+    outline: none;
+  }
+
+#canvas-section {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+#canvas-area {
+  margin: auto;
+}
+
+#instructions-section{
+  border-top: 1px solid gray;
+  font-size: 0.8rem;
+  color: lightSlateGray;
+}
+#instructions-section p {
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+
+footer {
+  margin-top: 2rem;
+  border-top: 1px solid gray;
+  text-align: center;
 }

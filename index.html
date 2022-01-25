@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Drawing Program</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./assets/style.css">
+  </head>
+
+  <body>
+    <header>
+      <h1>Drawing Program</h1>
+      <h2>(A We.Publish coding problem)</h2>
+    </header>
+
+    <main>
+      <section id="input-section">
+        <span>enter command: </span>
+        <input type="text" id="input-field" placeholder="C 20 15" autofocus>
+      </section>
+
+      <section id="canvas-section">
+        <code id="canvas-area">No canvas defined</code>
+      </section>
+
+      <section id ="instructions-section">
+        <h3>Instructions</h3>
+        <p><span>C w h</span><span>Create a new canvas of width w and height h.</span></p>
+        <p><span>L x1 y1 x2 y2</span><span>Create a new line from (x1,y1) to (x2,y2).</span></p>
+        <p><span>R x1 y1 x2 y2</span><span>Create a new rectangle, whose upper left corner is (x1,y1) and lower right corner is (x2,y2).</span></p>
+        <p><span>B x y c</span><span>Fill the entire area connected to (x,y) with "colour" c.</span></p>
+        <p><span>Q</span><span>Quit the program.</span></p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        © 2022 Ivan Probst • 
+        <a href="https://www.linkedin.com/in/ivanprobst/" target="_blank" rel=”noopener”>LinkedIn</a> • 
+        <a href="https://github.com/ivanprobst" target="_blank" rel=”noopener”>GitHub</a> • 
+        <a href="mailto:ivan.probst@gmail.com" rel=”noopener”>ivan.probst@gmail.com</a>
+      </p>
+    </footer>
+
+    <script src="assets/script.js"></script>
+  </body>
+</html>

@@ -51,22 +51,36 @@ const createCanvas = () => {
   }
 };
 
-const drawLine = (x1, y1, x2, y2) => {
-  // Vertical line
-  if(x1 === x2) {
-    const startY = Math.min(y1, y2) - 1;
-    const endY = Math.max(y1, y2);
-    for(let i = startY; i < endY; i++) {
-      canvasMatrix[i][x1 - 1] = lineChar;
-    }
-  // Horizontal line
-  } else {
-    const startX = Math.min(x1, x2) - 1;
-    const endX = Math.max(x1, x2);
-    for(let i = startX; i < endX; i++) {
-      canvasMatrix[y1 - 1][i] = lineChar;
-    }
+const drawHorizontalLine = (x1, x2, y) => {
+  for(let i = Math.min(x1, x2) - 1; i < Math.max(x1, x2); i++) {
+    canvasMatrix[y - 1][i] = lineChar;
   }
+};
+
+const drawVerticalLine = (y1, y2, x) => {
+  for(let i = Math.min(y1, y2) - 1; i < Math.max(y1, y2); i++) {
+    canvasMatrix[i][x - 1] = lineChar;
+  }
+};
+
+const drawLine = (x1, y1, x2, y2) => {
+  if(x1 === x2) {
+    drawVerticalLine(y1, y2, x1);
+  } else {
+    drawHorizontalLine(x1, x2, y1);
+  }
+};
+
+const drawRectangle = (x1, y1, x2, y2) => {
+  const leftX = Math.min(x1, x2);
+  const rightX = Math.max(x1, x2);
+  const topY = Math.min(y1, y2);
+  const bottomY = Math.max(y1, y2);
+
+  drawHorizontalLine(leftX, rightX, topY);
+  drawVerticalLine(topY, bottomY, rightX);
+  drawHorizontalLine(rightX, leftX, bottomY);
+  drawVerticalLine(bottomY, topY, leftX);
 };
 
 const executeCommand = (text) => {
@@ -87,10 +101,15 @@ const executeCommand = (text) => {
     drawLine(commandData[1], commandData[2], commandData[3], commandData[4]);
   }
 
+  commandData = text.match(drawRectangleRegex);
+  if(commandData) {
+    drawRectangle(commandData[1], commandData[2], commandData[3], commandData[4]);
+  }
+
   drawCanvas();
 };
 
-const isCommandLegit = (text) => {
+const isCommandValid = (text) => {
   // If canvas doesn't exist, accept only C command
   if(canvasMatrix.length === 0) {
     if(text.match(createCanvasRegex)) {
@@ -121,7 +140,7 @@ const input = document.getElementById("input-field");
 input.addEventListener("keyup", (e) => {
   const inputValue = e.target.value;
 
-  if(isCommandLegit(inputValue)) {
+  if(isCommandValid(inputValue)) {
     input.style.borderColor = "green";
     input.style.backgroundColor = "green";
   }

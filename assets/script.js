@@ -198,6 +198,7 @@ input.addEventListener("keyup", (e) => {
   if(e.key === "Enter") {
     executeCommand(inputValue);
 
-    // TODO: clear command input once command is executed
+    const inputField = document.getElementById("input-field");
+    inputField.value = "";
   }
 })

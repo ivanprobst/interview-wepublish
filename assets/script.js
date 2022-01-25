@@ -3,18 +3,31 @@ const topBorderChar = "-";
 const sideBorderChar = "|";
 const lineChar = "x";
 
-const createCanvasRegex = /C (\d+) (\d+)$/;
-const drawLineRegex = /L (\d+) (\d+) (\d+) (\d+)$/;
-const drawRectangleRegex = /R (\d+) (\d+) (\d+) (\d+)$/;
-const fillRegex = /B (\d+) (\d+) (.)$/;
-const quitRegex = /Q$/;
+const createCanvasRegex = /^C (\d+) (\d+)$/;
+const drawLineRegex = /^L (\d+) (\d+) (\d+) (\d+)$/;
+const drawRectangleRegex = /^R (\d+) (\d+) (\d+) (\d+)$/;
+const fillRegex = /^B (\d+) (\d+) (.)$/;
+const quitRegex = /^Q$/;
 
 // Handlers
 let canvasWidth = 0;
 let canvasHeight = 0;
 let canvasMatrix = [];
 
-// TODO: see if drawing can be "optimized"
+const coordinatesAreInCanvas = (xs, ys) => {
+  for(const x of xs) {
+    if(x < 1 || x > canvasWidth)
+      return false;
+  }
+
+  for(const y of ys) {
+    if(y < 1 || y > canvasHeight)
+      return false;
+  }
+
+  return true;
+}
+
 const drawCanvas = () => {
   const canvas = document.getElementById("canvas-area");
 
@@ -163,16 +176,26 @@ const isCommandValid = (text) => {
     return false;
   }
   
-  // If canvas exists, accept any command
-  // TODO: check if coordinates actually fits in canvas
+  // If canvas exists, accept other commands
   if(text.match(drawLineRegex)) {
-    // TODO: check line is horizontal / vertical
-    return true;
-  } else if (text.match(drawRectangleRegex)) {
-    return true;
-  } else if (text.match(fillRegex)) {
-    return true;
-  } else if (text.match(quitRegex)) {
+    const [, x1, y1, x2, y2] = text.match(drawLineRegex);
+    if((x1 === x2 || y1 === y2) && coordinatesAreInCanvas([x1, x2], [y1, y2]))
+      return true;
+  }
+
+  else if (text.match(drawRectangleRegex)) {
+    const [, x1, y1, x2, y2] = text.match(drawRectangleRegex);
+    if(coordinatesAreInCanvas([x1, x2], [y1, y2]))
+      return true;
+  }
+
+  else if (text.match(fillRegex)) {
+    const [, x, y] = text.match(fillRegex);
+    if(coordinatesAreInCanvas([x], [y]))
+      return true;
+  }
+
+  else if (text.match(quitRegex)) {
     return true;
   }
 
